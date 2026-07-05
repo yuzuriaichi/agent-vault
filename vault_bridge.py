@@ -36,7 +36,8 @@ class Vault:
 
         if not self.vault_path.exists():
             print(f"⚠️  Vault not found at {self.vault_path}")
-            print(f"   Set OBSIDIAN_VAULT_PATH or pass vault_path to Vault()")
+            print(f"   └─ Set OBSIDIAN_VAULT_PATH in your .env to point to YOUR vault.")
+            print(f"   └─ Example: export OBSIDIAN_VAULT_PATH=~/my-obsidian-vault")
 
     # ── Core Operations ──────────────────────────────────────────────
 

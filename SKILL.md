@@ -1,11 +1,31 @@
 ---
 name: vault-shared-memory
 category: memory
+description: Persistent cross-session shared memory backed by an Obsidian vault. Agents read, write, and search markdown notes that persist across all sessions, cron jobs, and conversations.
 ---
 
 # Vault Shared Memory
 
-Persistent, cross-session shared memory backed by the user's **Obsidian vault** at `/root/baby's vault/`. Every agent, skill, cron job, and conversation can read from and write to this vault — it's the "institutional memory" that spans all runs.
+Persistent, cross-session shared memory backed by your **Obsidian vault**. Every agent, skill, cron job, and conversation can read from and write to this vault — it's the "institutional memory" that spans all runs.
+
+## ⚙️ First-Time Setup
+
+Before the skill works, your Hermes needs to know where your vault is:
+
+```bash
+# Clone the repo (one-time)
+git clone https://github.com/yuzuriaichi/agent-vault.git ~/shared-memory-layer
+
+# Set your vault path (change this to YOUR vault's location)
+export OBSIDIAN_VAULT_PATH=~/my-obsidian-vault
+```
+
+Or set it permanently in your Hermes `.env` file:
+```
+OBSIDIAN_VAULT_PATH=~/my-obsidian-vault
+```
+
+If you **don't** set it, the tool will look for `~/baby's vault/` by default.
 
 ## Trigger Conditions
 
@@ -18,12 +38,12 @@ Use this skill when:
 
 ## Provided Tools
 
-The vault bridge lives at `/root/workspace/shared-memory-layer/`. Use it like this:
+All commands use `~/shared-memory-layer/` as the install path. Adjust if you placed the repo elsewhere.
 
 ### Save a research note
 
 ```shell
-python3 /root/workspace/shared-memory-layer/memory_agent.py write research \
+python3 ~/shared-memory-layer/memory_agent.py write research \
   "Topic Title" \
   "Your findings and notes here"
 ```
@@ -31,7 +51,7 @@ python3 /root/workspace/shared-memory-layer/memory_agent.py write research \
 ### Save a decision
 
 ```shell
-python3 /root/workspace/shared-memory-layer/memory_agent.py write decision \
+python3 ~/shared-memory-layer/memory_agent.py write decision \
   "Decision Title" \
   "Context and decision details"
 ```
@@ -39,7 +59,7 @@ python3 /root/workspace/shared-memory-layer/memory_agent.py write decision \
 ### Save a session summary
 
 ```shell
-python3 /root/workspace/shared-memory-layer/memory_agent.py write session \
+python3 ~/shared-memory-layer/memory_agent.py write session \
   "Session Title" \
   "What happened during this session"
 ```
@@ -47,26 +67,32 @@ python3 /root/workspace/shared-memory-layer/memory_agent.py write session \
 ### Search existing notes
 
 ```shell
-python3 /root/workspace/shared-memory-layer/memory_agent.py search "your keywords"
+python3 ~/shared-memory-layer/memory_agent.py search "your keywords"
 ```
 
 ### Read a specific note
 
 ```shell
-python3 /root/workspace/shared-memory-layer/memory_agent.py read "Research/Agentic OS"
+python3 ~/shared-memory-layer/memory_agent.py read "Research/Your Topic"
 ```
 
 ### List all notes
 
 ```shell
-python3 /root/workspace/shared-memory-layer/memory_agent.py list
+python3 ~/shared-memory-layer/memory_agent.py list
 ```
 
 ## Python API (for scripts and cron jobs)
 
 ```python
 from vault_bridge import Vault
+
+# Custom vault path — only needed if OBSIDIAN_VAULT_PATH isn't set
+vault = Vault(vault_path="~/my-obsidian-vault")
+
+# Or just use the env var default
 vault = Vault()
+
 vault.save_research("Topic", "Detailed findings")
 vault.save_decision("Title", context="...", decision="...")
 results = vault.search("keyword")
@@ -75,8 +101,10 @@ note = vault.read_note("Research/Topic")
 
 ## Folder Structure in the Vault
 
+Any Obsidian vault — the tool creates these folders on first write:
+
 ```
-baby's vault/
+your vault/
 ├── Research/           ← Research findings, investigations
 ├── Decisions/          ← Decision logs with context & rationale
 ├── Sessions/           ← Session summaries and outcomes
@@ -84,7 +112,7 @@ baby's vault/
 └── Projects/           ← Project-specific notes
 ```
 
-Folders are auto-created on first write — no setup needed.
+All folders auto-create on first write — zero setup needed.
 
 ## Best Practices
 
