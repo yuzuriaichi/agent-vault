@@ -63,7 +63,7 @@ def main():
         print(f"{'═'*40}")
         print(f"✅ No active crons yet")
         print(f"✅ No active watches yet")
-        print(f"⚡ All systems idle — waiting for baby's commands!")
+        print(f"⚡ All systems idle — waiting for Chef's commands!")
 
     else:
         print(f"❌ Unknown: {cmd}")

@@ -72,14 +72,14 @@ def main():
         print(f"   🔍 Analyzing code structure...")
         print(f"   💡 Proposal ready!")
         print(f"")
-        print(f"⚠️  Refactoring changes code — needs baby's approval first!")
+        print(f"⚠️  Refactoring changes code — needs Chef's approval first!")
 
     elif cmd == "status":
         proj = sys.argv[2] if len(sys.argv) > 2 else "all"
         print(f"💻 **Pip's Development Dashboard**")
         print(f"{'═'*40}")
         print(f"📦 Projects: None active yet")
-        print(f"🔧 Current task: Waiting for baby~")
+        print(f"🔧 Current task: Waiting for Chef~")
         print(f"✅ All systems ready!")
 
     else:

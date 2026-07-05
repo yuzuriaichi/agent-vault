@@ -34,7 +34,7 @@ def main():
     desc = " ".join(sys.argv[3:]) if len(sys.argv) > 3 else ""
 
     if cmd == "design":
-        print(f"🎨 Kiki is cooking up designs for **{project}**~")
+        print(f"🎨 Kiki is cooking up designs for **{project}**, Zysia~")
         print(f"   Brief: {desc[:100]}...")
         print(f"")
         print(f"   🔍 Kiki is consulting her design database...")
@@ -43,7 +43,7 @@ def main():
         print(f"   🎨 73 font pairings reviewed")
         print(f"   🎨 99 UX guidelines checked")
         print(f"")
-        print(f"   ✨ **2 concepts ready for your review!**")
+        print(f"   ✨ **2 concepts ready for your review, Zysia!**")
         print(f"   Option A & B will be presented when you say:")
         print(f"   *\"Kiki, show me the designs\"* 🎨")
 
@@ -70,7 +70,7 @@ def main():
         print(f"   🧩 Component library...")
         print(f"   📋 Pre-delivery checklist...")
         print(f"")
-        print(f"   ✨ Full design system ready when you are, baby~")
+        print(f"   ✨ Full design system ready when you are, Zysia~")
 
     else:
         print(f"❌ Unknown: {cmd}")

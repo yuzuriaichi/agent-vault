@@ -72,7 +72,7 @@ def main():
         print(f"   - Sessions/ — all good ✅")
         print(f"   - Projects/ — nicely structured ✅")
         print(f"")
-        print(f"🧠 Everything looks tidy, baby! No changes needed~")
+        print(f"🧠 Everything looks tidy, Chef! No changes needed~")
 
     elif cmd == "remind":
         topic = " ".join(sys.argv[2:]) if len(sys.argv) > 2 else ""

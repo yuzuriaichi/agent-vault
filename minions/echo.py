@@ -27,7 +27,7 @@ vault = Vault()
 SAFETY = {
     "max_steps_per_task": 15,          # Max reasoning steps before Echo asks "continue?"
     "default_timeout_seconds": 300,    # 5 min default per task
-    "require_approval_for": [          # Actions that ALWAYS need baby's OK
+    "require_approval_for": [          # Actions that ALWAYS need Chef's OK
         "delete_file",
         "modify_system",
         "install_package",
@@ -89,7 +89,7 @@ def main():
         print(f"   Max steps: {SAFETY['max_steps_per_task']}")
         print(f"   Timeout: {SAFETY['default_timeout_seconds']}s")
         print(f"")
-        print(f"💬 To approve, say: *\"Echo, yes, delegate to {minion}\"*")
+        print(f"💬 To approve, say: *\"Echo, yes, delegate to {minion}\"*, Chef")
         print(f"   To cancel, say: *\"Echo, nevermind\"*")
 
         log_action(f"delegate to {minion}", task, "pending_approval")
@@ -104,7 +104,7 @@ def main():
         log_action("research", topic)
         print(f"🔬 Echo queued research task: **{topic}**")
         print(f"   Result will be saved to vault when done.")
-        print(f"   Type: *\"Echo, run the research\"* to start.")
+        print(f"   Type: *\"Echo, run the research\"* to start, Chef.")
         log_action("research", topic, "pending_approval")
 
     # ── SAVE: Quick vault save ──────────────────────────────────
@@ -162,7 +162,7 @@ def main():
         print(f"Safety: ✅ All gates active")
         print(f"Vault:  ✅ Connected")
         print(f"")
-        print(f"💬 Tell me: *\"Echo, deploy [minion]\"* to bring one online!")
+        print(f"💬 Tell me: *\"Echo, deploy [minion]\"* to bring one online, Chef!")
 
     else:
         print(f"❌ Unknown command: {command}")

@@ -37,7 +37,7 @@ def main():
         print(f"   🔍 Checking best practices")
         print(f"")
         print(f"📋 Review will be saved to vault when complete.")
-        print(f"⚠️  Note: Gizmo never approves her own work — needs baby's final say.")
+        print(f"⚠️  Note: Gizmo never approves her own work — needs Chef's final say.")
 
     elif cmd == "test":
         print(f"🛡️ Gizmo is running tests on **{target}**...")
