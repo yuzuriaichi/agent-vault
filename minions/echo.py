@@ -18,7 +18,7 @@ import tempfile
 from pathlib import Path
 
 # ── Vault bridge for memory ──────────────────────────────────────
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from vault_bridge import Vault
 
 vault = Vault()
