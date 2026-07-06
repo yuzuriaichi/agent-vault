@@ -1,79 +1,98 @@
-# 🧠 agent-vault — Obsidian Shared Memory Layer for AI Agents
+# 🧠 agent-vault — Obsidian Shared Memory Layer + Minion Fleet
 
-Give your AI agents persistent, human-readable memory backed by **your Obsidian vault**. Research findings, decisions, and session summaries automatically get saved as markdown notes you can read, edit, and organize in Obsidian.
+Give your AI agents **persistent, human-readable memory** backed by your Obsidian vault, plus a fleet of specialized minions for research, design, development, testing, automation, and memory keeping.
 
 ```
 git clone https://github.com/yuzuriaichi/agent-vault.git ~/shared-memory-layer
 ```
 
-## ✨ What it does
+---
 
-- **Agents write** research, decisions, and session notes straight into your vault as `.md` files
-- **Agents search** the vault before answering — no re-researching what's already known
-- **You read everything** in Obsidian — it's your vault, your data, your control
-- **Works across Hermes instances** — clone on any machine, same shared memory
+## 📋 What's In This Repo
+
+### Core Memory Layer
+| File | Purpose |
+|---|---|
+| `vault_bridge.py` | Python engine — read/write/search any Obsidian vault |
+| `memory_agent.py` | CLI wrapper — save research/decisions/sessions, search, list |
+| `SKILL.md` | Hermes skill definition for the shared memory layer |
+| `templates/` | Structured note templates (research, decisions, sessions) |
+
+### Minion Fleet (`minions/`)
+| Minion | Role | File |
+|---|---|---|
+| 🧠 **Echo** | Foreman — coordinates all tasks, enforces safety | `minions/echo.py` |
+| 🔬 **Sage** | Researcher — deep-dive on any topic, beautiful md reports | `minions/sage.py` |
+| 🎨 **Kiki** | Designer — UI/UX, design systems, mockups | `minions/kiki.py` |
+| 💻 **Pip** | Developer — code, PRs, refactoring, repos | `minions/pip.py` |
+| 🛡️ **Gizmo** | Quality Guardian — code review, testing, security | `minions/gizmo.py` |
+| ⚡ **Spark** | Automation Tinkerer — cron jobs, feeds, watches | `minions/spark.py` |
+| 🧠 **Noodle** | Memory Keeper — vault tidy, digests, reminders | `minions/noodle.py` |
+| `cron-jobs.md` | Schedule reference for background tasks | |
+
+### Documentation (`docs/`)
+| File | Purpose |
+|---|---|
+| `architecture.md` | System design and component architecture |
+| `research-agentic-os.md` | Research findings on building an Agentic OS |
+| `minion-deployment-guide.md` | Minion roles, safety protocols, commands |
+| `setup-complete-guide.md` | One-page setup for a fresh Hermes instance |
+
+---
 
 ## 🚀 Quick Start
 
-### 1. Set your vault path
-
 ```bash
+# 1. Clone
+git clone https://github.com/yuzuriaichi/agent-vault.git ~/shared-memory-layer
+
+# 2. Set your vault path (change this!)
 export OBSIDIAN_VAULT_PATH=~/my-obsidian-vault
+
+# 3. Test it
+python3 ~/shared-memory-layer/memory_agent.py list
+
+# 4. Save something
+python3 ~/shared-memory-layer/memory_agent.py write research "Topic" "Findings"
+
+# 5. Register skills with your Hermes (see docs/setup-complete-guide.md)
 ```
 
-Or add it to your Hermes `.env`:
-```
-OBSIDIAN_VAULT_PATH=~/my-obsidian-vault
-```
+---
 
-### 2. Save something
+## 🧠 Architecture Overview
 
-```bash
-python3 ~/shared-memory-layer/memory_agent.py write research \
-  "Quantum Computing" \
-  "Found that quantum supremacy was achieved in..."
-```
-
-### 3. Search later
-
-```bash
-python3 ~/shared-memory-layer/memory_agent.py search "quantum"
-```
-
-## 📁 What gets saved
+The system has three layers:
 
 ```
-your vault/
-├── Research/    ← Research findings with dates & tags
-├── Decisions/   ← Decision logs with context & rationale
-├── Sessions/    ← Session summaries & outcomes
-├── Notes/       ← General notes
-└── Projects/    ← Project-specific notes
+┌─────────────────────────────────────────────┐
+│           🧸 Minion Fleet                    │
+│  Echo (coordinator) → delegates to →        │
+│  Sage · Kiki · Pip · Gizmo · Spark · Noodle │
+├─────────────────────────────────────────────┤
+│           🛡️ Safety Layer                    │
+│  Human-in-the-loop · Task budgets ·         │
+│  Retry logic · Audit logging                │
+├─────────────────────────────────────────────┤
+│           💾 Memory Layer                    │
+│  vault_bridge.py ⇄ Obsidian vault           │
+│  Research/ · Decisions/ · Sessions/ ·       │
+│  Notes/ · Projects/                         │
+└─────────────────────────────────────────────┘
 ```
 
-## 📦 What's in the box
+All minions run on **deepseek-v4-flash** for cost-effective background operation.
 
-| File | What it does |
-|---|---|
-| `vault_bridge.py` | Core Python module — read/write/search Obsidian vault |
-| `memory_agent.py` | CLI agent — call this from any Hermes or terminal |
-| `SKILL.md` | Hermes skill file — register so agents auto-use it |
-| `templates/` | Note templates for structured saving |
-
-## 🤖 Register as a Hermes Skill
-
-Tell your Hermes:
-
-> *"Register the vault-shared-memory skill from ~/shared-memory-layer/SKILL.md"*
-
-Once registered, your agent will automatically save research, log decisions, and search your vault for context — without you having to ask.
+---
 
 ## 🔧 Custom Vault Path
 
-The tool checks these in order:
+The tool checks in order:
 1. `vault_path` argument passed to `Vault()` in Python
 2. `OBSIDIAN_VAULT_PATH` environment variable
 3. Defaults to `~/baby's vault/`
+
+---
 
 ## 📝 License
 
